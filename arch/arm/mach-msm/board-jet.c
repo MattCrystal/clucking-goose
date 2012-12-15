@@ -121,10 +121,6 @@
 #include "linux/mfd/pm8xxx/pm8921-charger.h"
 #endif
 
-#ifdef CONFIG_PERFLOCK
-#include <mach/perflock.h>
-#endif
-
 #ifdef CONFIG_BT
 #include <mach/htc_bdaddress.h>
 #endif
@@ -4164,38 +4160,6 @@ static struct msm_spm_platform_data msm_spm_data[] __initdata = {
 	},
 };
 
-#ifdef CONFIG_PERFLOCK
-static unsigned jet_perf_acpu_table[] = {
-	594000000, 
-	810000000, 
-	1026000000, 
-	1134000000,
-	1512000000, 
-};
-
-static struct perflock_data jet_perflock_data = {
-	.perf_acpu_table = jet_perf_acpu_table,
-	.table_size = ARRAY_SIZE(jet_perf_acpu_table),
-};
-
-static struct perflock_data jet_cpufreq_ceiling_data = {
-	.perf_acpu_table = jet_perf_acpu_table,
-	.table_size = ARRAY_SIZE(jet_perf_acpu_table),
-};
-
-static struct perflock_pdata perflock_pdata = {
-       .perf_floor = &jet_perflock_data,
-       .perf_ceiling = &jet_cpufreq_ceiling_data,
-};
-
-struct platform_device msm8960_device_perf_lock = {
-       .name = "perf_lock",
-       .id = -1,
-       .dev = {
-               .platform_data = &perflock_pdata,
-       },
-};
-#endif
 
 static uint8_t l2_spm_wfi_cmd_sequence[] __initdata = {
 			0x00, 0x20, 0x03, 0x20,
@@ -4781,9 +4745,6 @@ static struct platform_device *common_devices[] __initdata = {
 	&htc_battery_pdev,
 #endif
 	&msm_tsens_device,
-#ifdef CONFIG_PERFLOCK
-	&msm8960_device_perf_lock,
-#endif
 };
 
 static struct platform_device *jet_devices[] __initdata = {

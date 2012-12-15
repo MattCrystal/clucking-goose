@@ -173,6 +173,13 @@ void unlock_policy_rwsem_write(int cpu);
 
 extern DEFINE_PER_CPU(int, cpufreq_init_done);
 
+#ifdef CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND
+extern void ondemand_boost_cpu(int boost);
+#endif
+
+/*********************************************************************
+ *                      CPUFREQ DRIVER INTERFACE                     *
+ *********************************************************************/
 
 #define CPUFREQ_RELATION_L 0  
 #define CPUFREQ_RELATION_H 1  

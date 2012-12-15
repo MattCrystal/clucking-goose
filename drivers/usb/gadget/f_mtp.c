@@ -717,6 +717,7 @@ static void send_file_work(struct work_struct *data)
 
 	DBG(cdev, "send_file_work returning %d\n", r);
 	
+	/* write the result */
 	dev->xfer_result = r;
 	smp_wmb();
 }
@@ -807,6 +808,7 @@ static void receive_file_work(struct work_struct *data)
 		printk(KERN_INFO "[USB][MTP]%s, total time:%ld\n", __func__, diff);
 	}
 	
+	/* write the result */
 	dev->xfer_result = r;
 	smp_wmb();
 }
@@ -852,27 +854,27 @@ static long mtp_ioctl(struct file *fp, unsigned code, unsigned long value)
 		return -EBUSY;
 
 	switch (code) {
-		case MTP_SEND_FILE:
-		case MTP_RECEIVE_FILE:
-		case MTP_SEND_FILE_WITH_HEADER:
-		{
-			struct mtp_file_range	mfr;
-			struct work_struct *work;
-			spin_lock_irq(&dev->lock);
-			if (dev->state == STATE_CANCELED) {
-				
-				dev->state = STATE_READY;
-				spin_unlock_irq(&dev->lock);
-				ret = -ECANCELED;
-				goto out;
-			}
-			if (dev->state == STATE_OFFLINE) {
-				spin_unlock_irq(&dev->lock);
-				ret = -ENODEV;
-				goto out;
-			}
-			dev->state = STATE_BUSY;
+	case MTP_SEND_FILE:
+	case MTP_RECEIVE_FILE:
+	case MTP_SEND_FILE_WITH_HEADER:
+	{
+		struct mtp_file_range	mfr;
+		struct work_struct *work;
+		spin_lock_irq(&dev->lock);
+		if (dev->state == STATE_CANCELED) {
+			/* report cancelation to userspace */
+			dev->state = STATE_READY;
 			spin_unlock_irq(&dev->lock);
+			ret = -ECANCELED;
+			goto out;
+		}
+		if (dev->state == STATE_OFFLINE) {
+			spin_unlock_irq(&dev->lock);
+			ret = -ENODEV;
+			goto out;
+		}
+		dev->state = STATE_BUSY;
+		spin_unlock_irq(&dev->lock);
 
 			if (copy_from_user(&mfr, (void __user *)value, sizeof(mfr))) {
 				ret = -EFAULT;
