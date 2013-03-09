@@ -512,15 +512,10 @@ SendReceive2(const unsigned int xid, struct cifs_ses *ses,
 {
 	int rc = 0;
 	int long_op;
-<<<<<<< HEAD
+
 	struct mid_q_entry *midQ =0;
-=======
-	struct mid_q_entry *midQ = NULL;
->>>>>>> f46b3d6... Linaro -O3 fixes
 	char *buf = iov[0].iov_base;
-
 	long_op = flags & CIFS_TIMEOUT_MASK;
-
 	*pRespBufType = CIFS_NO_BUFFER;  
 
 	if ((ses == NULL) || (ses->server == NULL)) {
