@@ -2935,6 +2935,7 @@ static int tabla_codec_reset_interpolator(struct snd_soc_dapm_widget *w,
 				  snd_soc_read(codec,
 				  rx_digital_gain_reg[w->shift])
 				  );
+								
 		break;
 	}
 	return 0;
@@ -7870,6 +7871,11 @@ static const struct file_operations codec_mbhc_debug_ops = {
 	.read = codec_mbhc_debug_read,
 };
 #endif
+
+#ifdef CONFIG_SOUND_CONTROL_HAX_GPL
+struct snd_kcontrol_new *gpl_faux_snd_controls_ptr =
+	(struct snd_kcontrol_new *)tabla_snd_controls;
+#endif 
 
 static int tabla_codec_probe(struct snd_soc_codec *codec)
 {
