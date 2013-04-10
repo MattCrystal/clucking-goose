@@ -1,4 +1,4 @@
-/* Copyright (c) 2012, Code Aurora Forum. All rights reserved.
+/* Copyright (c) 2011, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -57,6 +57,16 @@ static int __init mipi_video_himax_720p_pt_init(void)
 	pinfo.lcdc.v_pulse_width = 1;
 	pinfo.lcdc.border_clr = 0;	
 	pinfo.lcdc.underflow_clr = 0xff;	
+
+	pinfo.lcdc.h_back_porch  = 6;
+	pinfo.lcdc.h_front_porch = 6;
+	pinfo.lcdc.h_pulse_width = 2;
+	pinfo.lcdc.v_back_porch  = 6;
+	pinfo.lcdc.v_front_porch = 6;
+	pinfo.lcdc.v_pulse_width = 2;
+
+	pinfo.lcdc.border_clr = 0;	/* blk */
+	pinfo.lcdc.underflow_clr = 0xff;	/* blue */
 	pinfo.lcdc.hsync_skew = 0;
 	pinfo.bl_max = 200;
 	pinfo.bl_min = 1;
@@ -81,6 +91,10 @@ static int __init mipi_video_himax_720p_pt_init(void)
 	pinfo.mipi.t_clk_pre = 0x1c;
 	pinfo.mipi.stream = 0; 
 	pinfo.mipi.mdp_trigger = 0;
+	pinfo.mipi.t_clk_post = 0x03;
+	pinfo.mipi.t_clk_pre = 0x24;
+	pinfo.mipi.stream = 0; /* dma_p */
+	pinfo.mipi.mdp_trigger = DSI_CMD_TRIGGER_SW;
 	pinfo.mipi.dma_trigger = DSI_CMD_TRIGGER_SW;
 	pinfo.mipi.frame_rate = 55;
 	pinfo.mipi.dsi_phy_db = &dsi_video_mode_phy_db;
