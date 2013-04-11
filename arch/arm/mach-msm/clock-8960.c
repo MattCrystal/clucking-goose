@@ -5331,6 +5331,19 @@ static struct clk_lookup msm_clocks_8064[] = {
 	CLK_LOOKUP("core_clk",		gfx3d_axi_clk_8064.c,	"msm_iommu.9"),
 	CLK_LOOKUP("core_clk",		gfx3d_axi_clk_8064.c,	"msm_iommu.10"),
 	CLK_LOOKUP("core_clk",		vcap_axi_clk.c,		"msm_iommu.11"),
+	CLK_LOOKUP("core_clk",		jpegd_axi_clk.c,    "msm_iommu-v0.0"),
+	CLK_LOOKUP("core_clk",		vpe_axi_clk.c,	    "msm_iommu-v0.1"),
+	CLK_LOOKUP("core_clk",		mdp_axi_clk.c,	    "msm_iommu-v0.2"),
+	CLK_LOOKUP("core_clk",		mdp_axi_clk.c,	    "msm_iommu-v0.3"),
+	CLK_LOOKUP("core_clk",		rot_axi_clk.c,	    "msm_iommu-v0.4"),
+	CLK_LOOKUP("core_clk",		ijpeg_axi_clk.c,    "msm_iommu-v0.5"),
+	CLK_LOOKUP("core_clk",		vfe_axi_clk.c,	    "msm_iommu-v0.6"),
+	CLK_LOOKUP("core_clk",		vcodec_axi_a_clk.c, "msm_iommu-v0.7"),
+	CLK_LOOKUP("core_clk",		vcodec_axi_b_clk.c, "msm_iommu-v0.8"),
+	CLK_LOOKUP("core_clk",		gfx3d_axi_clk.c,    "msm_iommu-v0.9"),
+	CLK_LOOKUP("core_clk",		gfx3d_axi_clk.c,    "msm_iommu-v0.10"),
+
+	CLK_LOOKUP("core_clk",		vcap_axi_clk.c,	    "msm_iommu-v0.11"),
 
 	CLK_LOOKUP("mdp_iommu_clk", mdp_axi_clk.c,	"msm_vidc.0"),
 	CLK_LOOKUP("rot_iommu_clk",	rot_axi_clk.c,	"msm_vidc.0"),
@@ -5626,7 +5639,16 @@ static struct clk_lookup msm_clocks_8960[] = {
 	CLK_LOOKUP("mem_iface_clk",	imem_p_clk.c,	"kgsl-3d0.0"),
 	CLK_LOOKUP("iface_clk",		mdp_p_clk.c,		"mdp.0"),
 	CLK_LOOKUP("iface_clk",		mdp_p_clk.c,	"footswitch-8x60.4"),
-	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.0"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.1"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.2"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.3"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.4"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.5"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.6"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.7"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.8"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.9"),
 	CLK_LOOKUP("iface_clk",		rot_p_clk.c,	"msm_rotator.0"),
 	CLK_LOOKUP("iface_clk",		rot_p_clk.c,	"footswitch-8x60.6"),
 	CLK_LOOKUP("iface_clk",	tv_enc_p_clk.c,		"tvenc.0"),
@@ -5660,6 +5682,7 @@ static struct clk_lookup msm_clocks_8960[] = {
 	CLK_LOOKUP("pcm_clk",		pcm_clk.c,		"msm-dai-q6.3"),
 	CLK_LOOKUP("sps_slimbus_clk",	sps_slimbus_clk.c,	NULL),
 	CLK_LOOKUP("core_clk",		audio_slimbus_clk.c, "msm_slim_ctrl.1"),
+<<<<<<< HEAD
 	CLK_LOOKUP("core_clk",		jpegd_axi_clk.c,	"msm_iommu.0"),
 	CLK_LOOKUP("core_clk",		vpe_axi_clk.c,		"msm_iommu.1"),
 	CLK_LOOKUP("core_clk",		mdp_axi_clk.c,		"msm_iommu.2"),
@@ -5672,6 +5695,18 @@ static struct clk_lookup msm_clocks_8960[] = {
 	CLK_LOOKUP("core_clk",		gfx3d_clk.c,		"msm_iommu.9"),
 	CLK_LOOKUP("core_clk",		gfx2d0_clk.c,		"msm_iommu.10"),
 	CLK_LOOKUP("core_clk",		gfx2d1_clk.c,		"msm_iommu.11"),
+=======
+	CLK_LOOKUP("core_clk",		jpegd_axi_clk.c,    "msm_iommu-v0.0"),
+	CLK_LOOKUP("core_clk",		vpe_axi_clk.c,	    "msm_iommu-v0.1"),
+	CLK_LOOKUP("core_clk",		mdp_axi_clk.c,	    "msm_iommu-v0.2"),
+	CLK_LOOKUP("core_clk",		mdp_axi_clk.c,	    "msm_iommu-v0.3"),
+	CLK_LOOKUP("core_clk",		rot_axi_clk.c,	    "msm_iommu-v0.4"),
+	CLK_LOOKUP("core_clk",		ijpeg_axi_clk.c,    "msm_iommu-v0.5"),
+	CLK_LOOKUP("core_clk",		vfe_axi_clk.c,	    "msm_iommu-v0.6"),
+	CLK_LOOKUP("core_clk",		vcodec_axi_a_clk.c, "msm_iommu-v0.7"),
+	CLK_LOOKUP("core_clk",		vcodec_axi_b_clk.c, "msm_iommu-v0.8"),
+	CLK_LOOKUP("core_clk",		gfx3d_clk.c,	    "msm_iommu-v0.9"),
+>>>>>>> 8c63c96... More clock changes for iommu
 
 	CLK_LOOKUP("mdp_iommu_clk", mdp_axi_clk.c,	"msm_vidc.0"),
 	CLK_LOOKUP("rot_iommu_clk",	rot_axi_clk.c,	"msm_vidc.0"),
@@ -5981,7 +6016,18 @@ static struct clk_lookup deluxe_j_clocks_8064_xb[] = {
 	CLK_LOOKUP("mem_iface_clk",	imem_p_clk.c,	"kgsl-3d0.0"),
 	CLK_LOOKUP("iface_clk",		mdp_p_clk.c,		"mdp.0"),
 	CLK_LOOKUP("iface_clk",		mdp_p_clk.c,	"footswitch-8x60.4"),
-	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,		"msm_iommu"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.0"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.1"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.2"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.3"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.4"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.5"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.6"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.7"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.8"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.9"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.10"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.11"),
 	CLK_LOOKUP("iface_clk",		rot_p_clk.c,	"msm_rotator.0"),
 	CLK_LOOKUP("iface_clk",		rot_p_clk.c,	"footswitch-8x60.6"),
 	CLK_LOOKUP("iface_clk",		vcodec_p_clk.c,		"msm_vidc.0"),
@@ -6045,6 +6091,7 @@ static struct clk_lookup deluxe_j_clocks_8064_xb[] = {
 	CLK_LOOKUP("core_clk",	      usb_hsic_system_clk.c,   "msm_hsic_host"),
 	CLK_LOOKUP("iface_clk",	      usb_hsic_p_clk.c,        "msm_hsic_host"),
 
+<<<<<<< HEAD
 	CLK_LOOKUP("core_clk",		jpegd_axi_clk.c,	"msm_iommu.0"),
 	CLK_LOOKUP("core_clk",		vpe_axi_clk.c,		"msm_iommu.1"),
 	CLK_LOOKUP("core_clk",		mdp_axi_clk.c,		"msm_iommu.2"),
@@ -6057,6 +6104,21 @@ static struct clk_lookup deluxe_j_clocks_8064_xb[] = {
 	CLK_LOOKUP("core_clk",		gfx3d_axi_clk_8064.c,	"msm_iommu.9"),
 	CLK_LOOKUP("core_clk",		gfx3d_axi_clk_8064.c,	"msm_iommu.10"),
 	CLK_LOOKUP("core_clk",		vcap_axi_clk.c,		"msm_iommu.11"),
+=======
+	CLK_LOOKUP("core_clk",		jpegd_axi_clk.c,    "msm_iommu-v0.0"),
+	CLK_LOOKUP("core_clk",		vpe_axi_clk.c,	    "msm_iommu-v0.1"),
+	CLK_LOOKUP("core_clk",		mdp_axi_clk.c,	    "msm_iommu-v0.2"),
+	CLK_LOOKUP("core_clk",		mdp_axi_clk.c,	    "msm_iommu-v0.3"),
+	CLK_LOOKUP("core_clk",		rot_axi_clk.c,	    "msm_iommu-v0.4"),
+	CLK_LOOKUP("core_clk",		ijpeg_axi_clk.c,    "msm_iommu-v0.5"),
+	CLK_LOOKUP("core_clk",		vfe_axi_clk.c,	    "msm_iommu-v0.6"),
+	CLK_LOOKUP("core_clk",		vcodec_axi_a_clk.c, "msm_iommu-v0.7"),
+	CLK_LOOKUP("core_clk",		vcodec_axi_b_clk.c, "msm_iommu-v0.8"),
+	CLK_LOOKUP("core_clk",		gfx3d_axi_clk.c,    "msm_iommu-v0.9"),
+	CLK_LOOKUP("core_clk",		gfx3d_axi_clk.c,    "msm_iommu-v0.10"),
+
+	CLK_LOOKUP("core_clk",		vcap_axi_clk.c,	    "msm_iommu-v0.11"),
+>>>>>>> 8c63c96... More clock changes for iommu
 
 	CLK_LOOKUP("mdp_iommu_clk", mdp_axi_clk.c,	"msm_vidc.0"),
 	CLK_LOOKUP("rot_iommu_clk",	rot_axi_clk.c,	"msm_vidc.0"),
@@ -6077,6 +6139,40 @@ static struct clk_lookup deluxe_j_clocks_8064_xb[] = {
 	CLK_LOOKUP("krait3_mclk",	krait3_m_clk, ""),
 };
 
+<<<<<<< HEAD
+=======
+static struct clk_lookup msm_clocks_8960_only[] __initdata = {
+	CLK_LOOKUP("enc_clk",	tv_enc_clk.c,		"tvenc.0"),
+	CLK_LOOKUP("dac_clk",	tv_dac_clk.c,		"tvenc.0"),
+	CLK_LOOKUP("iface_clk",	tv_enc_p_clk.c,		"tvenc.0"),
+
+	CLK_LOOKUP("core_clk",		gfx2d0_clk.c,	"kgsl-2d0.0"),
+	CLK_LOOKUP("core_clk",		gfx2d0_clk.c,	"footswitch-8x60.0"),
+	CLK_LOOKUP("core_clk",		gfx2d1_clk.c,	"kgsl-2d1.1"),
+	CLK_LOOKUP("core_clk",		gfx2d1_clk.c,	"footswitch-8x60.1"),
+	CLK_LOOKUP("iface_clk",		gfx2d0_p_clk.c,	"kgsl-2d0.0"),
+	CLK_LOOKUP("iface_clk",		gfx2d0_p_clk.c,	"footswitch-8x60.0"),
+	CLK_LOOKUP("iface_clk",		gfx2d1_p_clk.c,	"kgsl-2d1.1"),
+	CLK_LOOKUP("iface_clk",		gfx2d1_p_clk.c,	"footswitch-8x60.1"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.10"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.11"),
+	CLK_LOOKUP("core_clk",		gfx2d0_clk.c,	"msm_iommu-v0.10"),
+	CLK_LOOKUP("core_clk",		gfx2d1_clk.c,	"msm_iommu-v0.11"),
+};
+
+static struct clk_lookup msm_clocks_8960ab_only[] __initdata = {
+  CLK_LOOKUP("bus_clk", gfx3d_axi_clk.c, "footswitch-8x60.2"),
+  CLK_LOOKUP("iface_clk",	smmu_p_clk.c,	"msm_iommu-v0.10"),
+  CLK_LOOKUP("core_clk", gfx3d_axi_clk.c, "msm_iommu-v0.10"),
+  CLK_LOOKUP("div_clk",   tv_src_div_clk.c,   ""),
+};
+
+static struct clk_lookup msm_clocks_8960[ARRAY_SIZE(msm_clocks_8960_common)
+	+ ARRAY_SIZE(msm_clocks_8960_only)
+	+ ARRAY_SIZE(msm_clocks_8960ab_only)];
+
+
+>>>>>>> 8c63c96... More clock changes for iommu
 static struct clk_lookup msm_clocks_8930[] = {
 	CLK_LOOKUP("xo",		cxo_clk.c,	"msm_xo"),
 	CLK_LOOKUP("cxo",		cxo_clk.c,	"wcnss_wlan.0"),
@@ -6311,7 +6407,16 @@ static struct clk_lookup msm_clocks_8930[] = {
 	CLK_LOOKUP("mem_iface_clk",	imem_p_clk.c,	"kgsl-3d0.0"),
 	CLK_LOOKUP("iface_clk",		mdp_p_clk.c,		"mdp.0"),
 	CLK_LOOKUP("iface_clk",		mdp_p_clk.c,	"footswitch-8x60.4"),
-	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.0"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.1"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.2"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.3"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.4"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.5"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.6"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.7"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.8"),
+	CLK_LOOKUP("iface_clk",		smmu_p_clk.c,	"msm_iommu-v0.9"),
 	CLK_LOOKUP("iface_clk",		rot_p_clk.c,	"msm_rotator.0"),
 	CLK_LOOKUP("iface_clk",		rot_p_clk.c,	"footswitch-8x60.6"),
 	CLK_LOOKUP("iface_clk",		vcodec_p_clk.c,	"msm_vidc.0"),
@@ -6345,16 +6450,16 @@ static struct clk_lookup msm_clocks_8930[] = {
 	CLK_LOOKUP("pcm_clk",		pcm_clk.c,		"msm-dai-q6.2"),
 	CLK_LOOKUP("sps_slimbus_clk",	sps_slimbus_clk.c,	NULL),
 	CLK_LOOKUP("core_clk",		audio_slimbus_clk.c, "msm_slim_ctrl.1"),
-	CLK_LOOKUP("core_clk",		vpe_axi_clk.c,		"msm_iommu.1"),
-	CLK_LOOKUP("core_clk",		mdp_axi_clk.c,		"msm_iommu.2"),
-	CLK_LOOKUP("core_clk",		mdp_axi_clk.c,		"msm_iommu.3"),
-	CLK_LOOKUP("core_clk",		rot_axi_clk.c,		"msm_iommu.4"),
-	CLK_LOOKUP("core_clk",		ijpeg_axi_clk.c,	"msm_iommu.5"),
-	CLK_LOOKUP("core_clk",		vfe_axi_clk.c,		"msm_iommu.6"),
-	CLK_LOOKUP("core_clk",		vcodec_axi_a_clk.c,	"msm_iommu.7"),
-	CLK_LOOKUP("core_clk",		vcodec_axi_b_clk.c,	"msm_iommu.8"),
-	CLK_LOOKUP("core_clk",		gfx3d_axi_clk_8930.c,	"msm_iommu.9"),
-	CLK_LOOKUP("core_clk",		gfx3d_axi_clk_8930.c,	"msm_iommu.10"),
+	CLK_LOOKUP("core_clk",		vpe_axi_clk.c,	  "msm_iommu-v0.1"),
+	CLK_LOOKUP("core_clk",		mdp_axi_clk.c,	  "msm_iommu-v0.2"),
+	CLK_LOOKUP("core_clk",		mdp_axi_clk.c,	  "msm_iommu-v0.3"),
+	CLK_LOOKUP("core_clk",		rot_axi_clk.c,	  "msm_iommu-v0.4"),
+	CLK_LOOKUP("core_clk",		ijpeg_axi_clk.c,  "msm_iommu-v0.5"),
+	CLK_LOOKUP("core_clk",		vfe_axi_clk.c,	  "msm_iommu-v0.6"),
+	CLK_LOOKUP("core_clk",	   vcodec_axi_a_clk.c,    "msm_iommu-v0.7"),
+	CLK_LOOKUP("core_clk",	   vcodec_axi_b_clk.c,    "msm_iommu-v0.8"),
+	CLK_LOOKUP("core_clk",	   gfx3d_axi_clk_8930.c,  "msm_iommu-v0.9"),
+	CLK_LOOKUP("core_clk",	   gfx3d_axi_clk_8930.c,  "msm_iommu-v0.10"),
 
 	CLK_LOOKUP("mdp_iommu_clk", mdp_axi_clk.c,	"msm_vidc.0"),
 	CLK_LOOKUP("rot_iommu_clk",	rot_axi_clk.c,	"msm_vidc.0"),
