@@ -177,12 +177,17 @@ static int __flush_iotlb_va(struct iommu_domain *domain, unsigned int va)
 		if (ret)
 			goto fail;
 
+		msm_iommu_remote_spin_lock();
+
 		asid = GET_CONTEXTIDR_ASID(iommu_drvdata->base,
 					   ctx_drvdata->num);
 
 		SET_TLBIVA(iommu_drvdata->base, ctx_drvdata->num,
 			   asid | (va & TLBIVA_VA));
 		mb();
+
+		msm_iommu_remote_spin_unlock();
+
 		__disable_clocks(iommu_drvdata);
 	}
 fail:
@@ -209,11 +214,16 @@ static int __flush_iotlb(struct iommu_domain *domain)
 		if (ret)
 			goto fail;
 
+		msm_iommu_remote_spin_lock();
+
 		asid = GET_CONTEXTIDR_ASID(iommu_drvdata->base,
 					   ctx_drvdata->num);
 
 		SET_TLBIASID(iommu_drvdata->base, ctx_drvdata->num, asid);
 		mb();
+
+		msm_iommu_remote_spin_unlock();
+
 		__disable_clocks(iommu_drvdata);
 	}
 fail:
@@ -250,6 +260,9 @@ static void __program_context(void __iomem *base, int ctx, int ncb,
 {
 	unsigned int prrr, nmrr;
 	int i, j, found;
+
+	msm_iommu_remote_spin_lock();
+
 	__reset_context(base, ctx);
 
 	/* Set up HTW mode */
@@ -339,6 +352,8 @@ static void __program_context(void __iomem *base, int ctx, int ncb,
 	/* Enable the MMU */
 	SET_M(base, ctx, 1);
 	mb();
+
+	msm_iommu_remote_spin_unlock();
 }
 
 static int msm_iommu_domain_init(struct iommu_domain *domain, int flags)
@@ -478,10 +493,15 @@ static void msm_iommu_detach_dev(struct iommu_domain *domain,
 	if (ret)
 		goto fail;
 
+	msm_iommu_remote_spin_lock();
+
 	SET_TLBIASID(iommu_drvdata->base, ctx_dev->num,
 		     GET_CONTEXTIDR_ASID(iommu_drvdata->base, ctx_dev->num));
 
 	__reset_context(iommu_drvdata->base, ctx_dev->num);
+
+	msm_iommu_remote_spin_unlock();
+
 	__disable_clocks(iommu_drvdata);
 	list_del_init(&ctx_drvdata->attached_elm);
 	ctx_drvdata->attached_domain = NULL;
@@ -1092,6 +1112,8 @@ static phys_addr_t msm_iommu_iova_to_phys(struct iommu_domain *domain,
 	if (ret)
 		goto fail;
 
+	msm_iommu_remote_spin_lock();
+
 	SET_V2PPR(base, ctx, va & V2Pxx_VA);
 
 	mb();
@@ -1105,6 +1127,8 @@ static phys_addr_t msm_iommu_iova_to_phys(struct iommu_domain *domain,
 
 	if (GET_FAULT(base, ctx))
 		ret = 0;
+
+	msm_iommu_remote_spin_unlock();
 
 	__disable_clocks(iommu_drvdata);
 fail:
@@ -1166,6 +1190,8 @@ irqreturn_t msm_iommu_fault_handler(int irq, void *dev_id)
 	if (ret)
 		goto fail;
 
+	msm_iommu_remote_spin_lock();
+
 	fsr = GET_FSR(base, num);
 
 	if (fsr) {
@@ -1191,6 +1217,8 @@ irqreturn_t msm_iommu_fault_handler(int irq, void *dev_id)
 		ret = IRQ_HANDLED;
 	} else
 		ret = IRQ_NONE;
+
+	msm_iommu_remote_spin_unlock();
 
 	__disable_clocks(drvdata);
 fail:
@@ -1261,6 +1289,8 @@ static int __init msm_iommu_init(void)
 {
 	if (!msm_soc_version_supports_iommu_v1())
 		return -ENODEV;
+
+	msm_iommu_lock_initialize();
 
 	setup_iommu_tex_classes();
 	bus_set_iommu(&platform_bus_type, &msm_iommu_ops);
