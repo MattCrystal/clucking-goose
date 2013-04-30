@@ -1,4 +1,4 @@
-/* Copyright (c) 2010-2013, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2010-2012, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -12,7 +12,6 @@
  */
 
 #include <linux/vmalloc.h>
-#include <mach/board.h>
 
 #include "kgsl.h"
 #include "kgsl_sharedmem.h"
@@ -51,7 +50,6 @@ static const struct pm_id_name pm3_types[] = {
 	{CP_DRAW_INDX,			"DRW_NDX_"},
 	{CP_DRAW_INDX_BIN,		"DRW_NDXB"},
 	{CP_EVENT_WRITE,		"EVENT_WT"},
-	{CP_MEM_WRITE,			"MEM_WRIT"},
 	{CP_IM_LOAD,			"IN__LOAD"},
 	{CP_IM_LOAD_IMMEDIATE,		"IM_LOADI"},
 	{CP_IM_STORE,			"IM_STORE"},
@@ -69,14 +67,6 @@ static const struct pm_id_name pm3_types[] = {
 	{CP_SET_PROTECTED_MODE,	"ST_PRT_M"},
 	{CP_SET_SHADER_BASES,		"ST_SHD_B"},
 	{CP_WAIT_FOR_IDLE,		"WAIT4IDL"},
-};
-
-static const struct pm_id_name pm3_nop_values[] = {
-	{KGSL_CONTEXT_TO_MEM_IDENTIFIER,	"CTX_SWCH"},
-	{KGSL_CMD_IDENTIFIER,			"CMD__EXT"},
-	{KGSL_CMD_INTERNAL_IDENTIFIER,		"CMD__INT"},
-	{KGSL_START_OF_IB_IDENTIFIER,		"IB_START"},
-	{KGSL_END_OF_IB_IDENTIFIER,		"IB___END"},
 };
 
 static uint32_t adreno_is_pm4_len(uint32_t word)
@@ -134,28 +124,6 @@ static const char *adreno_pm4_name(uint32_t word)
 				return pm3_types[i].name;
 		}
 		return "????????";
-	}
-	return "????????";
-}
-
-static bool adreno_is_pm3_nop_value(uint32_t word)
-{
-	int i;
-
-	for (i = 0; i < ARRAY_SIZE(pm3_nop_values); ++i) {
-		if (word == pm3_nop_values[i].id)
-			return 1;
-	}
-	return 0;
-}
-
-static const char *adreno_pm3_nop_name(uint32_t word)
-{
-	int i;
-
-	for (i = 0; i < ARRAY_SIZE(pm3_nop_values); ++i) {
-		if (word == pm3_nop_values[i].id)
-			return pm3_nop_values[i].name;
 	}
 	return "????????";
 }
@@ -276,13 +244,8 @@ static void adreno_dump_rb_buffer(const void *buf, size_t len,
 				"%s", adreno_pm4_name(ptr4[j]));
 			*argp = -(adreno_is_pm4_len(ptr4[j])+1);
 		} else {
-			if (adreno_is_pm3_nop_value(ptr4[j]))
-				lx += scnprintf(linebuf + lx, linebuflen - lx,
-					"%s", adreno_pm3_nop_name(ptr4[j]));
-			else
-				lx += scnprintf(linebuf + lx, linebuflen - lx,
-					"%8.8X", ptr4[j]);
-
+			lx += scnprintf(linebuf + lx, linebuflen - lx,
+				"%8.8X", ptr4[j]);
 			if (*argp > 1)
 				--*argp;
 			else if (*argp == 1) {
@@ -702,7 +665,7 @@ static void adreno_dump_a2xx(struct kgsl_device *device)
 		" %08X\n", r1, r2, r3);
 
 	KGSL_LOG_DUMP(device, "PAGETABLE SIZE: %08X ",
-		kgsl_mmu_get_ptsize(&device->mmu));
+		kgsl_mmu_get_ptsize());
 
 	kgsl_regread(device, MH_MMU_TRAN_ERROR, &r1);
 	KGSL_LOG_DUMP(device, "        TRAN_ERROR = %08X\n", r1);
@@ -740,7 +703,6 @@ int adreno_dump(struct kgsl_device *device, int manual)
 	mb();
 
 	if (device->pm_dump_enable) {
-
 		if (adreno_is_a2xx(adreno_dev))
 			adreno_dump_a2xx(device);
 		else if (adreno_is_a3xx(adreno_dev))
@@ -928,8 +890,7 @@ int adreno_dump(struct kgsl_device *device, int manual)
 			adreno_dump_regs(device, a3xx_registers,
 					a3xx_registers_count);
 
-			if (adreno_is_a330(adreno_dev) ||
-				adreno_is_a305b(adreno_dev))
+			if (adreno_is_a330(adreno_dev))
 				adreno_dump_regs(device, a330_registers,
 					a330_registers_count);
 		}
@@ -939,73 +900,4 @@ error_vfree:
 	vfree(rb_copy);
 end:
 	return result;
-}
-
-
-int adreno_postmortem_dump(struct kgsl_device *device, int manual)
-{
-	bool saved_nap;
-	struct kgsl_pwrctrl *pwr = &device->pwrctrl;
-
-	BUG_ON(device == NULL);
-
-	kgsl_cffdump_hang(device->id);
-
-	
-
-	if (manual) {
-		if (device->active_cnt != 0) {
-			mutex_unlock(&device->mutex);
-			wait_for_completion(&device->suspend_gate);
-			mutex_lock(&device->mutex);
-		}
-
-		if (device->state == KGSL_STATE_ACTIVE)
-			kgsl_idle(device,  KGSL_TIMEOUT_DEFAULT);
-
-	}
-	KGSL_LOG_DUMP(device, "POWER: FLAGS = %08lX | ACTIVE POWERLEVEL = %08X",
-			pwr->power_flags, pwr->active_pwrlevel);
-
-	KGSL_LOG_DUMP(device, "POWER: INTERVAL TIMEOUT = %08X ",
-		pwr->interval_timeout);
-
-	KGSL_LOG_DUMP(device, "GRP_CLK = %lu ",
-				  kgsl_get_clkrate(pwr->grp_clks[0]));
-
-	KGSL_LOG_DUMP(device, "BUS CLK = %lu ",
-		kgsl_get_clkrate(pwr->ebi1_clk));
-
-	
-	del_timer_sync(&device->idle_timer);
-	mutex_unlock(&device->mutex);
-	flush_workqueue(device->work_queue);
-	mutex_lock(&device->mutex);
-
-	saved_nap = device->pwrctrl.nap_allowed;
-	device->pwrctrl.nap_allowed = false;
-
-	
-	kgsl_pwrctrl_wake(device);
-
-	
-	kgsl_pwrctrl_irq(device, KGSL_PWRFLAGS_OFF);
-
-	adreno_dump(device);
-
-	
-	device->pwrctrl.nap_allowed = saved_nap;
-
-
-	if (manual) {
-		kgsl_pwrctrl_irq(device, KGSL_PWRFLAGS_ON);
-
-		
-		kgsl_pwrctrl_request_state(device, KGSL_STATE_SLEEP);
-		kgsl_pwrctrl_sleep(device);
-	}
-
-	KGSL_DRV_ERR(device, "Dump Finished\n");
-
-	return 0;
 }
