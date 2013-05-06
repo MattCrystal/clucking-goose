@@ -187,9 +187,9 @@ static void free_flex_gd(struct ext4_new_flex_group_data *flex_gd)
  * Returns 0 on a successful allocation of the metadata blocks in the
  * block group.
  */
-static void ext4_alloc_group_tables(struct super_block *sb,
-	struct ext4_new_flex_group_data *flex_gd,
-	int flexbg_size)
+static int ext4_alloc_group_tables(struct super_block *sb,
+				struct ext4_new_flex_group_data *flex_gd,
+				int flexbg_size)
 {
 	struct ext4_new_group_data *group_data = flex_gd->groups;
 	struct ext4_super_block *es = EXT4_SB(sb)->s_es;
