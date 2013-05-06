@@ -4,7 +4,7 @@
 # create a compressed vmlinuz image from the original vmlinux
 #
 
-OBJS		= 
+OBJS		=
 
 # Ensure that MMCIF loader code appears early in the image
 # to minimise that number of bocks that have to be read in
@@ -25,7 +25,6 @@ AFLAGS_head.o += -DTEXT_OFFSET=$(TEXT_OFFSET)
 AFLAGS_head.o += -Wa,-march=armv7-a$(plus_sec)
 AFLAGS_misc.o +=-Wa,-march=armv7-a$(plus_sec)
 AFLAGS_decompress.o += -Wa,-march=armv7-a$(plus_sec)
-
 HEAD	= head.o
 OBJS	+= misc.o decompress.o
 FONTC	= $(srctree)/drivers/video/console/font_acorn_8x8.c
@@ -130,7 +129,7 @@ KBUILD_CFLAGS = $(subst -pg, , $(ORIG_CFLAGS))
 endif
 
 ccflags-y := -fpic -fno-builtin -I$(obj)
-asflags-y := -Wa,-march=all
+asflags-y := -Wa,-march=armv7-a
 
 # Supply kernel BSS size to the decompressor via a linker symbol.
 KBSS_SZ = $(shell $(CROSS_COMPILE)size $(obj)/../../../../vmlinux | \
